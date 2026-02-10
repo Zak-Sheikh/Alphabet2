@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Falling Picture Quiz Game</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      text-align: center;
+    }
+    header {
+      background: #222;
+      color: #fff;
+      padding: 10px;
+    }
+    .score {
+      font-size: 20px;
+      margin: 10px;
+    }
+    .game-area {
+      position: relative;
+      width: 100%;
+      height: 400px;
+      background: #87CEEB;
+      overflow: hidden;
+      border: 2px solid #333;
+    }
+    .falling-pic {
+      position: absolute;
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      top: -120px;
+      left: 50%;
+      transform: translateX(-50%);
+      transition: top 0.05s linear;
+    }
+    .answers {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 20px;
+    }
+    .answer {
+      padding: 10px 20px;
+      background: #eee;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .answer:hover {
+      background: #ddd;
+    }
+    .answer.correct {
+      background: lightgreen;
+    }
+    .answer.wrong {
+      background: #f4f4f4;
+      border: 2px solid lightgreen;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>📚 Falling Picture Quiz Game</h1>
+</header>
+
+<div class="score" id="score">Score: 0</div>
+
+<div class="game-area" id="gameArea">
+  <img id="fallingPic" class="falling-pic" src="" alt="quiz picture">
+</div>
+
+<div class="answers" id="answers"></div>
+
+<script>
+  const items = [
+    { name: "Antelope", image: "images/antelope.jpg" },
+    { name: "Bear", image: "images/bear.jpg" },
+    { name: "Circle", image: "images/circle.png" },
+    { name: "Dolphin", image: "images/dolphin.jpg" },
+    { name: "Earth", image: "images/earth.jpg" }
+  ];
+
+  let score = 0;
+  let currentItem = null;
+  const scoreDisplay = document.getElementById("score");
+  const fallingPic = document.getElementById("fallingPic");
+  const answersDiv = document.getElementById("answers");
+
+  function startRound() {
+    // Pick random item
+    currentItem = items[Math.floor(Math.random() * items.length)];
+    fallingPic.src = currentItem.image;
+    fallingPic.style.top = "-120px";
+
+    // Generate 4 wrong answers
+    let options = [currentItem.name];
+    while (options.length < 5) {
+      let wrong = items[Math.floor(Math.random() * items.length)].name;
+      if (!options.includes(wrong)) options.push(wrong);
+    }
+    options = options.sort(() => Math.random() - 0.5);
+
+    // Render answer buttons
+    answersDiv.innerHTML = "";
+    options.forEach(opt => {
+      const btn = document.createElement("div");
+      btn.className = "answer";
+      btn.textContent = opt;
+      btn.onclick = () => checkAnswer(opt, btn);
+      answersDiv.appendChild(btn);
+    });
+
+    // Animate falling picture
+    let pos = -120;
+    const fallInterval = setInterval(() => {
+      pos += 5;
+      fallingPic.style.top = pos + "px";
+      if (pos > 400) {
+        clearInterval(fallInterval);
+      }
+    }, 50);
+  }
+
+  function checkAnswer(selected, btn) {
+    if (selected === currentItem.name) {
+      btn.classList.add("correct");
+      score++;
+      scoreDisplay.textContent = "Score: " + score;
+      setTimeout(startRound, 1000);
+    } else {
+      btn.classList.add("wrong");
+      alert("Try again!");
+    }
+  }
+
+  // Start first round
+  startRound();
+</script>
+
+</body>
+</html>

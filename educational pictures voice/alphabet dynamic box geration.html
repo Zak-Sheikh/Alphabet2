@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Educational Boxes</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      color: #333;
+    }
+    header {
+      position: sticky;
+      top: 0;
+      background: #222;
+      color: #fff;
+      padding: 10px;
+      text-align: center;
+      z-index: 100;
+    }
+    nav {
+      background: #333;
+      padding: 10px;
+      text-align: center;
+    }
+    nav a {
+      color: #fff;
+      margin: 0 8px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    nav a:hover { color: #ffcc00; }
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 20px;
+      gap: 20px;
+    }
+    .box {
+      width: 220px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      overflow: hidden;
+      text-align: center;
+      transition: transform 0.2s ease;
+    }
+    .box:hover { transform: translateY(-5px); }
+    .box img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      background: #ddd;
+    }
+    .box h3 {
+      margin: 10px 0;
+      font-size: 1.1rem;
+      color: #444;
+    }
+    .box p {
+      margin: 0 0 10px;
+      font-size: 0.9rem;
+      color: #666;
+    }
+    html { scroll-behavior: smooth; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Educational Scroll Page</h1>
+</header>
+
+<nav id="alphabetNav"></nav>
+
+<div class="container" id="boxContainer"></div>
+
+<script>
+  // Example dataset — expand this list with your guidance names
+  const items = [
+    { name: "<b><h3>deero</b></H3>,<b/>, Antelope",category: "Animal", letter: "A", image: "anthlope.jfif" },
+    { name: "<b><h1><b>Bear</b></H1>,</b>", category: "Animal", letter: "B", image: "" },
+    { name: "<h3><b><h3>Wareeg</b></H3>,</b></H3>,, Circle", category: "Shape", letter: "C", image: "circle.png" },
+    { name: "<b>doolfin</b>, Dolphin", category: "Animal", letter: "D", image: "\dolphin box 4a.jfif" },
+    { name: "<b><h3><b>Dhul</b></H3>,</b>, Earth", category: "Planet", letter: "E", image: "planet.jfif" },
+    { name: "<b><h3>Beeraleey</b></H3>,, Farmer", category: "Human Role", letter: "F", image: "farmer.jfif" },
+    { name: "<b><h3><b>Geri</b></H3>,</b>,,Giraffe", category: "Animal", letter: "G", image: "girrafe.jfif" },
+    { name: "Hexagon", category: "Shape", letter: "H", image: "images/hexagon.png" },
+    { name: "Jupitor, Jupiter", category: "Planet", letter: "J", image: "images/jupiter.jpg" },
+    { name: "<h3><b>Libaax</b></H3>,, Lion", category: "Animal", letter: "L", image: "lion.jfif" },
+    { name: "Mars, Mars", category: "Planet", letter: "M", image: "images/mars.jpg" },
+    { name: "<h3><b>Kalkaaliso</b></H3>,, Nurse", category: "Human Role", letter: "N", image: "nurse.jfif" },
+    { name: "Octopus", category: "Animal", letter: "O", image: "images/octopus.jpg" },
+    { name: "Penguin", category: "Animal", letter: "P", image: "images/penguin.jpg" },
+    { name: "Quadrilateral", category: "Shape", letter: "Q", image: "images/quadrilateral.png" },
+    { name: "<h3><b>Gantaal</b></H3>,, Rocket", category: "Planet", letter: "R", image: "rocket.png" },
+    { name: "Saturn", category: "Planet", letter: "S", image: "images/saturn.jpg" },
+    { name: "<b><h3><b>Macalin</b></H3>,</b>,, Teacher", category: "Human Role", letter: "T", image: "teacher.jfif" },
+    { name: "Uranus", category: "Planet", letter: "U", image: "images/uranus.jpg" },
+    { name: "Venus", category: "Planet", letter: "V", image: "images/venus.jpg" },
+    { name: "<h3><b>Nibiri</b></H3>,, Whale", category: "Animal", letter: "W", image: "whale.jfif" },
+    { name: "Xylophone", category: "Object", letter: "X", image: "images/xylophone.png" },
+    { name: "<h3><b>Lo Gisi</b></H3>,, Yak", category: "Animal", letter: "Y", image: "yak.jfif" },
+    { name: "<h3><b>Dameer Farow</b></H3>,, Zebra", category: "Animal", letter: "Z", image: "zebra.jfif" }
+  ];
+
+  // Generate alphabet navigation
+  const alphabet = [...new Set(items.map(i => i.letter))];
+  const nav = document.getElementById("alphabetNav");
+  alphabet.forEach(letter => {
+    const link = document.createElement("a");
+    link.href = "#" + letter;
+    link.textContent = letter;
+    nav.appendChild(link);
+  });
+
+  // Generate boxes dynamically
+  const container = document.getElementById("boxContainer");
+  items.forEach((item, index) => {
+    const box = document.createElement("div");
+    box.className = "box";
+    box.id = item.letter; // anchor target
+
+    box.innerHTML = `
+      <img src="${item.image}" alt="${item.name}">
+      <h3>Box ${index + 1}</h3>
+      <p>${item.name} (${item.category})</p>
+    `;
+    container.appendChild(box);
+  });
+</script>
+
+</body>
+</html>
